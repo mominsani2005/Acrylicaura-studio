@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select Category - Acrylicaura Studio</title>
+
+<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#FFE6F3,#FFF4FA);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass-card{
+  background:rgba(255,255,255,0.35);
+  backdrop-filter:blur(16px);
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.1);
+  padding:20px;
+  cursor:pointer;
+  transition:transform .3s ease;
+  min-height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:16px;
+}
+
+@media (hover:hover){
+  .glass-card:hover{
+    transform:translateY(-4px);
+  }
+}
+
+.glass-card:active{
+  transform:scale(0.97);
+}
+</style>
+</head>
+
+<body class="min-h-screen px-4 py-8">
+
+<h1 class="text-3xl font-bold text-purple-700 mb-6 text-center">
+✨ What would you like to create?
+</h1>
+
+<div id="categoriesContainer"
+     class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+</div>
+
+<script>
+// ====== DAY 29 & 30: User session check ======
+const userSession = JSON.parse(localStorage.getItem('userSession'));
+if(!userSession){
+  alert("Please login first!");
+  window.location.href='login.html';
+}
+
+// ====== Categories Data ======
+const categoriesContainer = document.getElementById("categoriesContainer");
+
+const categories = [
+  { id: 1, name: "Acrylic Photo Frames", image: "frame.png" },
+  { id: 2, name: "Acrylic Name Plates", image: "nameplate.png" },
+  { id: 3, name: "LED / Moon Lamps", image: "lamp.png" },
+  { id: 4, name: "Resin Gifts", image: "resin.png" },
+  { id: 5, name: "Customized Mugs", image: "mug.png" },
+  { id: 6, name: "Couple Gifts", image: "couple.png" },
+  { id: 7, name: "Birthday / Anniversary Gifts", image: "birthday.png" },
+  { id: 8, name: "Custom Category", image: "custom.png" }
+];
+
+// ====== Render Categories ======
+categories.forEach(cat => {
+  const div = document.createElement("div");
+  div.className = "glass-card font-semibold text-purple-700";
+  div.textContent = cat.name;
+
+  div.onclick = () => {
+    const selectedCategory = {
+      id: cat.id,
+      name: cat.name,
+      image: cat.image,
+      selectedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem("selectedCategory", JSON.stringify(selectedCategory));
+
+    // Go to customization page
+    window.location.href = "customized.html";
+  };
+
+  categoriesContainer.appendChild(div);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Services – Acrylicaura Studio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#FFE6F3,#FFF4FA);
+  color:#333;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* Navbar */
+.navbar{
+  background:#C75BA1;
+  color:#fff;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+  flex-wrap:wrap;
+}
+.navbar a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+  font-size:15px;
+  padding:6px 0;
+}
+.navbar a:hover{color:#FFD1EC}
+
+/* Subnav */
+.subnav{
+  background:linear-gradient(135deg,#E77CC4,#F2A6D8);
+  padding:10px 15px;
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  flex-wrap:wrap;
+}
+.subnav a{
+  color:white;
+  font-size:13px;
+  text-decoration:none;
+  padding:6px 10px;
+  border-radius:8px;
+}
+
+/* Header */
+.page-header{
+  text-align:center;
+  padding:50px 20px;
+  background:linear-gradient(135deg,#C75BA1,#E77CC4);
+  color:white;
+  border-bottom-left-radius:45px;
+  border-bottom-right-radius:45px;
+}
+
+/* Content */
+.container{
+  width:85%;
+  max-width:900px;
+  margin:40px auto;
+}
+
+/* Cards */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:22px;
+}
+.card{
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(14px);
+  border-radius:18px;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,.1);
+  transition:transform .3s ease;
+}
+
+/* Hover only for non-touch devices */
+@media (hover:hover){
+  .card:hover{
+    transform:translateY(-6px);
+  }
+}
+
+/* Touch feedback */
+.card:active{
+  transform:scale(0.97);
+}
+
+.card h3{
+  color:#C75BA1;
+  margin-bottom:8px;
+}
+
+/* Mobile spacing safety */
+@media(max-width:640px){
+  .container{
+    width:92%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <h2>🎁 Acrylicaura Studio</h2>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
+
+<!-- SUBNAV -->
+<div class="subnav">
+  <a href="products.html">Products</a>
+  <a href="customized.html">Customized</a>
+  <a href="orders.html">Orders</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="summary.html">Summary</a>
+</div>
+
+<!-- HEADER -->
+<div class="page-header">
+  <h1>Our Services</h1>
+  <p>Crafted with love • Designed for memories</p>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+  <div class="grid">
+
+    <div class="card">
+      <h3>Custom Acrylic Gifts</h3>
+      <p>Photo frames, name plates & personalized designs.</p>
+    </div>
+
+    <div class="card">
+      <h3>Resin Art Creations</h3>
+      <p>Elegant resin gifts with premium finishing.</p>
+    </div>
+
+    <div class="card">
+      <h3>LED & Moon Lamps</h3>
+      <p>Customized lamps that glow with emotions.</p>
+    </div>
+
+    <div class="card">
+      <h3>Corporate & Bulk Orders</h3>
+      <p>Perfect gifting solutions for events & brands.</p>
+    </div>
+
+    <div class="card">
+      <h3>Design Consultation</h3>
+      <p>We help you choose the perfect style & theme.</p>
+    </div>
+
+    <div class="card">
+      <h3>Fast & Secure Delivery</h3>
+      <p>Carefully packed & delivered on time.</p>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
+<!-- day 29 and 30 remainning  -->

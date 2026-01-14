@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orders - Acrylicaura Studio</title>
+<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#FFE6F3,#FFF4FA);
+}
+
+.header{
+  text-align:center;
+  padding:50px 20px;
+  background:linear-gradient(135deg,#C75BA1,#E77CC4);
+  color:white;
+  border-bottom-left-radius:50px;
+  border-bottom-right-radius:50px;
+}
+
+.container{
+  max-width:900px;
+  margin:40px auto;
+  padding:20px;
+}
+
+.tabs{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-bottom:30px;
+}
+
+.tab{
+  padding:12px 28px;
+  border-radius:20px;
+  cursor:pointer;
+  background:rgba(255,255,255,0.4);
+  backdrop-filter:blur(15px);
+  font-weight:600;
+  white-space:nowrap;
+}
+
+.tab.active{
+  background:linear-gradient(135deg,#C75BA1,#E77CC4);
+  color:white;
+}
+
+.card{
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(18px);
+  border-radius:22px;
+  padding:25px;
+  margin-bottom:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.status{
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:999px;
+  font-weight:600;
+  color:white;
+  margin-top:10px;
+}
+
+.status-Draft{background:#FF7E6E;}
+.status-Pending{background:#f4b400;}
+.status-Processing{background:#3f88c5;}
+.status-Ready{background:#6bcf77;}
+.status-Shipped{background:#a17ffb;}
+.status-Delivered{background:#8DFFBC;}
+
+.btn{
+  padding:8px 18px;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+  margin-right:8px;
+}
+
+.btn-delete{background:#FF7E6E;color:white;}
+.btn-next{background:#3f88c5;color:white;}
+
+/* ========================= */
+/* DAY 26 – MOBILE UX FIXES */
+/* ========================= */
+@media (max-width: 640px){
+  body{
+    overflow-y:auto;
+  }
+
+  .container{
+    padding:16px;
+    margin-top:25px;
+  }
+
+  .tabs{
+    overflow-x:auto;
+    justify-content:flex-start;
+    padding-bottom:5px;
+    scrollbar-width:none;
+  }
+
+  .tabs::-webkit-scrollbar{
+    display:none;
+  }
+
+  .tab{
+    flex-shrink:0;
+    padding:14px 22px;
+  }
+
+  .card{
+    padding:20px;
+  }
+
+  .card:hover{
+    transform:none;
+  }
+
+  .btn{
+    padding:10px 20px;
+    margin-top:6px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1 class="text-3xl font-bold">✨ My Orders & Designs</h1>
+</div>
+
+<div class="container">
+
+  <div class="tabs">
+    <div class="tab active" id="draftTab" onclick="showTab('draft')">My Custom Designs</div>
+    <div class="tab" id="ordersTab" onclick="showTab('orders')">My Orders</div>
+  </div>
+
+  <div id="draftContainer"></div>
+  <div id="ordersContainer" style="display:none;"></div>
+
+</div>
+
+<script>
+// ====== DAY 29 & 30: User session check ======
+const userSession = JSON.parse(localStorage.getItem('userSession'));
+if(!userSession){
+  alert("Please login first!");
+  window.location.href='login.html';
+}
+
+// ====== Tabs ======
+const draftTab=document.getElementById("draftTab");
+const ordersTab=document.getElementById("ordersTab");
+const draftContainer=document.getElementById("draftContainer");
+const ordersContainer=document.getElementById("ordersContainer");
+
+function showTab(tab){
+  if(tab==="draft"){
+    draftContainer.style.display="block";
+    ordersContainer.style.display="none";
+    draftTab.classList.add("active");
+    ordersTab.classList.remove("active");
+  }else{
+    draftContainer.style.display="none";
+    ordersContainer.style.display="block";
+    draftTab.classList.remove("active");
+    ordersTab.classList.add("active");
+  }
+}
+
+// ====== Load user-specific drafts & orders ======
+let allDrafts = JSON.parse(localStorage.getItem("draftDesigns")) || [];
+let drafts = allDrafts.filter(d=>d.userEmail === userSession.email || userSession.name==="Guest");
+
+let allOrders = JSON.parse(localStorage.getItem("orders")) || [];
+let orders = allOrders.filter(o=>o.userEmail === userSession.email || userSession.name==="Guest");
+
+// ====== Render Drafts ======
+function renderDrafts(){
+  if(drafts.length===0){
+    draftContainer.innerHTML=`<p class="text-center text-gray-600 mt-10">No draft designs yet ✨</p>`;
+    return;
+  }
+  draftContainer.innerHTML = drafts.map(d=>`
+    <div class="card">
+      <p><b>Category:</b> ${d.category}</p>
+      <p><b>Material:</b> ${d.material}</p>
+      <p><b>Style:</b> ${d.style}</p>
+      <p><b>Size:</b> ${d.size}</p>
+      <p><b>Message:</b> ${d.message || "-"}</p>
+      <span class="status status-Draft">Draft</span>
+      <div class="mt-4">
+        <button class="btn btn-delete" onclick="deleteDraft('${d.id}')">Delete</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+// ====== Render Orders ======
+function renderOrders(){
+  if(orders.length===0){
+    ordersContainer.innerHTML=`<p class="text-center text-gray-600 mt-10">No orders placed yet ✨</p>`;
+    return;
+  }
+  ordersContainer.innerHTML = orders.map((o,index)=>`
+    <div class="card">
+      <p class="text-sm text-gray-500">Order ID: ${o.orderId}</p>
+      <p class="text-sm text-gray-500 mb-2">Date: ${o.date}</p>
+      <p><b>Category:</b> ${o.category}</p>
+      <p><b>Material:</b> ${o.material}</p>
+      <p><b>Style:</b> ${o.style}</p>
+      <p><b>Size:</b> ${o.size}</p>
+      <p><b>Message:</b> ${o.message || "-"}</p>
+      <p><b>Payment:</b> ${o.paymentMethod}</p>
+      <span class="status status-${o.status}">${o.status}</span>
+      <div class="mt-3">
+        ${o.status!=="Delivered"?`<button class="btn btn-next" onclick="advanceStatus(${index})">Next Status</button>`:''}
+        ${o.status==="Pending"?`<button class="btn btn-delete" onclick="cancelOrder(${index})">Cancel</button>`:''}
+      </div>
+    </div>
+  `).join("");
+}
+
+// ====== Delete Draft ======
+function deleteDraft(id){
+  drafts = drafts.filter(d=>d.id!==id);
+  allDrafts = allDrafts.filter(d=>d.id!==id);
+  localStorage.setItem("draftDesigns",JSON.stringify(allDrafts));
+  renderDrafts();
+}
+
+// ====== Advance Order Status ======
+function advanceStatus(i){
+  const statusFlow=["Pending","Processing","Ready","Shipped","Delivered"];
+  let currentIndex = statusFlow.indexOf(orders[i].status);
+  if(currentIndex<statusFlow.length-1){
+    orders[i].status=statusFlow[currentIndex+1];
+    const idx = allOrders.findIndex(o=>o.orderId===orders[i].orderId);
+    allOrders[idx] = orders[i];
+    localStorage.setItem("orders",JSON.stringify(allOrders));
+    renderOrders();
+  }
+}
+
+// ====== Cancel Order ======
+function cancelOrder(i){
+  if(confirm("Are you sure you want to cancel this order?")){
+    const orderId = orders[i].orderId;
+    orders.splice(i,1);
+    allOrders = allOrders.filter(o=>o.orderId!==orderId);
+    localStorage.setItem("orders",JSON.stringify(allOrders));
+    renderOrders();
+  }
+}
+
+// ====== Initial render ======
+renderDrafts();
+renderOrders();
+</script>
+
+</body>
+</html>

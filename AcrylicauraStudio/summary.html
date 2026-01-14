@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acrylicaura Studio - Summary</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',Arial,sans-serif;
+  background:linear-gradient(135deg,#FFE6F3,#FFF4FA);
+}
+
+/* MAIN NAVBAR */
+.navbar{
+  background:#C75BA1;
+  color:white;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+.navbar a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+  font-weight:500;
+}
+.navbar a:hover{
+  color:#FFD1EC;
+}
+
+/* SUB NAVBAR */
+.subnav{
+  background:linear-gradient(135deg,#E77CC4,#F2A6D8);
+  padding:10px;
+  display:flex;
+  justify-content:center;
+  gap:25px;
+}
+.subnav a{
+  color:white;
+  text-decoration:none;
+  font-size:13px;
+}
+
+/* CONTENT */
+.container{
+  width:85%;
+  max-width:900px;
+  margin:40px auto;
+}
+
+.title{
+  text-align:center;
+  color:#C75BA1;
+  margin-bottom:30px;
+}
+
+.box{
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  margin-bottom:20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MAIN NAVBAR -->
+<div class="navbar">
+  <h2>🎁 Acrylicaura Studio</h2>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
+
+<!-- SUB NAVBAR -->
+<div class="subnav">
+  <a href="products.html">Products</a>
+  <a href="customized.html">Customized</a>
+  <a href="orders.html">Orders</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="summary.html">Summary</a>
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="container">
+  <h1 class="title">Project Summary</h1>
+
+  <div class="box">
+    <h3>Total Orders</h3>
+    <p id="totalOrders">0 Orders Placed</p>
+  </div>
+
+  <div class="box">
+    <h3>Customized Gifts</h3>
+    <p id="giftTypes">No customization yet</p>
+  </div>
+
+  <div class="box">
+    <h3>Project Status</h3>
+    <p id="projectStatus"></p>
+  </div>
+</div>
+
+<script>
+/* DAY 26 IMPLEMENTATION – LOGIC ONLY */
+
+// ORDERS
+const orders = JSON.parse(localStorage.getItem("orders")) || [];
+document.getElementById("totalOrders").innerText =
+  orders.length + " Orders Placed";
+
+// SELECTED CATEGORY
+const selectedCategory = JSON.parse(localStorage.getItem("selectedCategory"));
+document.getElementById("giftTypes").innerText =
+  selectedCategory ? selectedCategory.name : "No customization yet";
+
+// PROJECT STATUS
+let statusHTML = `
+Frontend Completed ✔<br>
+Backend (LocalStorage) ✔<br>
+`;
+
+if (orders.length > 0) {
+  statusHTML += "Orders Flow Working ✔";
+} else {
+  statusHTML += "Waiting for Orders ⏳";
+}
+
+document.getElementById("projectStatus").innerHTML = statusHTML;
+</script>
+
+</body>
+</html>
+// day 29 and 30 remainning 

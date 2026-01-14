@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery - Acrylicaura Studio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#FFE6F3,#FFF4FA);
+}
+
+/* Navbar */
+.navbar{
+  background:#C75BA1;
+  color:white;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.navbar a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+  font-size:15px;
+  padding:8px 6px;
+}
+.navbar a:hover{color:#FFD1EC}
+
+/* Subnav */
+.subnav{
+  background:linear-gradient(135deg,#E77CC4,#F2A6D8);
+  padding:12px 30px;
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  flex-wrap:wrap;
+}
+.subnav a{
+  color:white;
+  font-size:13px;
+  text-decoration:none;
+  padding:8px 6px;
+}
+
+/* Header */
+.header{
+  text-align:center;
+  padding:45px 20px;
+  background:linear-gradient(135deg,#C75BA1,#E77CC4);
+  color:white;
+  border-bottom-left-radius:45px;
+  border-bottom-right-radius:45px;
+}
+
+/* Gallery */
+.container{
+  width:85%;
+  max-width:1000px;
+  margin:40px auto;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.card{
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  transition:transform 0.3s;
+  position:relative;
+}
+.card:hover{
+  transform:translateY(-6px);
+}
+.card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  loading:lazy;
+}
+.card p{
+  padding:14px;
+  text-align:center;
+  font-weight:500;
+  color:#C75BA1;
+}
+
+/* Favorite star */
+.favorite-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  font-size:22px;
+  cursor:pointer;
+  color:#ddd;
+  transition:0.3s;
+}
+.favorite-btn.favorited{
+  color:#FFD700;
+}
+.favorite-btn:hover{ transform:scale(1.2); }
+
+/* Footer */
+.footer {
+  text-align:center;
+  padding:20px;
+  background:#f0f0f0;
+  margin-top:40px;
+  border-top-left-radius:25px;
+  border-top-right-radius:25px;
+  font-size:14px;
+  color:#555;
+}
+
+/* Floating Chatbot */
+.chatbot {
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  width:64px; height:64px;
+  border-radius:50%;
+  background:#C75BA1; color:white;
+  display:flex; justify-content:center; align-items:center;
+  font-size:28px; cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  transition:transform 0.2s;
+  z-index:1000;
+}
+.chatbot:active { transform:scale(0.95); }
+
+.chatbox {
+  position:fixed; bottom:100px; right:20px;
+  width:92%;
+  max-width:300px;
+  max-height:420px;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(15px);
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.2);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:1000;
+}
+.chat-header {
+  background:#C75BA1;
+  color:white;
+  padding:14px;
+  text-align:center;
+  font-weight:600;
+}
+.chat-body {
+  flex:1;
+  padding:12px;
+  overflow-y:auto;
+  font-size:14px;
+  color:#333;
+}
+.chat-input {
+  display:flex;
+  border-top:1px solid #ddd;
+}
+.chat-input input {
+  flex:1;
+  border:none;
+  padding:12px;
+  font-size:14px;
+  outline:none;
+}
+.chat-input button {
+  padding:12px 16px;
+  background:#C75BA1;
+  color:white;
+  border:none;
+  font-size:14px;
+  cursor:pointer;
+}
+
+/* ===== Mobile UX ===== */
+@media(max-width:600px){
+  .navbar{
+    flex-direction:column;
+    gap:10px;
+    text-align:center;
+  }
+  .navbar a{
+    margin-left:10px;
+    font-size:14px;
+  }
+  .header{
+    padding:35px 15px;
+  }
+  .header h1{
+    font-size:22px;
+  }
+  .container{
+    width:92%;
+    margin:30px auto;
+  }
+  .card img{
+    height:180px;
+  }
+  .footer{
+    font-size:13px;
+    padding:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <h2>🎁 Acrylicaura Studio</h2>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
+
+<!-- Subnav -->
+<div class="subnav">
+  <a href="products.html">Products</a>
+  <a href="customized.html">Customized</a>
+  <a href="orders.html">Orders</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="summary.html">Summary</a>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <h1>✨ Our Gift Gallery</h1>
+  <p>Some of our beautiful handcrafted creations</p>
+</div>
+
+<!-- Gallery Grid -->
+<div class="container">
+  <div class="grid" id="galleryGrid">
+    <!-- Cards added via JS -->
+  </div>
+</div>
+
+<!-- Floating Chatbot -->
+<div class="chatbot" id="chatbotBtn">💬</div>
+<div class="chatbox" id="chatbox">
+  <div class="chat-header">Chat with us</div>
+  <div class="chat-body" id="chatBody">
+    <p>Hi 👋 How can we help you today?</p>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<div class="footer">
+  © 2025 Acrylicaura Studio — ✨ Where emotions transform into beautiful handmade gifts.
+</div>
+
+<script>
+// ========== DAY 29: USER SESSION CHECK ==========
+const userSession = JSON.parse(localStorage.getItem("userSession"));
+if(!userSession){
+  alert("Please login first!");
+  window.location.href="login.html";
+}
+
+// ========== DAY 30: GALLERY + FAVORITES ==========
+const galleryItems = [
+  {id:1, name:"Photo Frames", img:"https://images.unsplash.com/photo-1519682337058-a94d519337bc"},
+  {id:2, name:"Resin Art", img:"https://images.unsplash.com/photo-1585386959984-a41552231693"},
+  {id:3, name:"Moon Lamps", img:"https://images.unsplash.com/photo-1600369672770-985fd30004eb"},
+  {id:4, name:"Customized Mugs", img:"https://images.unsplash.com/photo-1598300053654-7d3e28cb5a36"}
+];
+
+const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+function renderGallery(){
+  const grid = document.getElementById("galleryGrid");
+  grid.innerHTML = "";
+  galleryItems.forEach(item=>{
+    const card = document.createElement("div");
+    card.className="card";
+    card.innerHTML = `
+      <span class="favorite-btn ${favorites.includes(item.id)?'favorited':''}" data-id="${item.id}">★</span>
+      <img src="${item.img}" alt="${item.name}">
+      <p>${item.name}</p>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Favorite button click
+  document.querySelectorAll(".favorite-btn").forEach(btn=>{
+    btn.onclick = ()=>{
+      const id = parseInt(btn.dataset.id);
+      if(favorites.includes(id)){
+        favorites.splice(favorites.indexOf(id),1);
+        btn.classList.remove("favorited");
+      } else {
+        favorites.push(id);
+        btn.classList.add("favorited");
+      }
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    };
+  });
+}
+
+renderGallery();
+
+// ========== CHATBOT ==========
+const chatbotBtn = document.getElementById('chatbotBtn');
+const chatbox = document.getElementById('chatbox');
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+
+chatbotBtn.onclick = () => {
+  chatbox.style.display = chatbox.style.display === 'flex' ? 'none' : 'flex';
+};
+
+function sendMessage() {
+  const msg = chatInput.value.trim();
+  if(!msg) return;
+  const userMsg = document.createElement('p');
+  userMsg.textContent = "You: " + msg;
+  chatBody.appendChild(userMsg);
+  chatInput.value='';
+  chatBody.scrollTop = chatBody.scrollHeight;
+  setTimeout(() => {
+    const botMsg = document.createElement('p');
+    botMsg.textContent = "Bot: Thanks for reaching out! We'll assist you shortly 💖";
+    chatBody.appendChild(botMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }, 800);
+}
+</script>
+
+</body>
+</html>

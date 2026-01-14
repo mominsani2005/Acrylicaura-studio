@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact – Acrylicaura Studio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#FFE6F3,#FFF4FA);
+  color:#333;
+}
+
+/* Navbar */
+.navbar{
+  background:#C75BA1;
+  color:white;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+.navbar a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+}
+.navbar a:hover{color:#FFD1EC}
+
+/* Subnav */
+.subnav{
+  background:linear-gradient(135deg,#E77CC4,#F2A6D8);
+  padding:10px 20px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.subnav a{
+  color:white;
+  font-size:13px;
+  text-decoration:none;
+}
+
+/* Header */
+.page-header{
+  text-align:center;
+  padding:50px 20px;
+  background:linear-gradient(135deg,#C75BA1,#E77CC4);
+  color:white;
+  border-bottom-left-radius:45px;
+  border-bottom-right-radius:45px;
+}
+
+/* Container */
+.container{
+  width:85%;
+  max-width:700px;
+  margin:40px auto;
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(14px);
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,.1);
+}
+
+/* Form */
+form input, form textarea{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:10px;
+  border:1px solid #ccc;
+  outline:none;
+  font-family:'Poppins',sans-serif;
+}
+form button{
+  background:linear-gradient(135deg,#C75BA1,#E77CC4);
+  color:white;
+  padding:12px 25px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+}
+form button:hover{ transform:translateY(-2px); }
+
+/* Summary */
+.summary{ display:none; text-align:left; }
+.summary h3{ color:#C75BA1; margin-bottom:15px; }
+.summary p{
+  background:#fff;
+  padding:10px;
+  border-radius:8px;
+  margin:8px 0;
+}
+
+/* Order Preview */
+#orderPreview{
+  display:none;
+  margin-top:15px;
+  padding:10px;
+  background:#FCE6F6;
+  border-radius:12px;
+  color:#C75BA1;
+  font-weight:500;
+}
+
+/* Footer */
+.footer{
+  text-align:center;
+  padding:20px;
+  background:#f0f0f0;
+  margin-top:40px;
+  border-top-left-radius:25px;
+  border-top-right-radius:25px;
+  font-size:14px;
+  color:#555;
+}
+
+/* Chatbot */
+.chatbot{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  width:60px; height:60px;
+  border-radius:50%;
+  background:#C75BA1; color:white;
+  display:flex; justify-content:center; align-items:center;
+  font-size:28px; cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  transition:0.3s; z-index:1000;
+}
+.chatbot:hover{ transform:scale(1.1); }
+
+.chatbox{
+  position:fixed;
+  bottom:95px;
+  right:25px;
+  width:300px;
+  max-height:420px;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(15px);
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.2);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:1000;
+}
+.chat-header{ background:#C75BA1; color:white; padding:12px; text-align:center; font-weight:600; }
+.chat-body{ flex:1; padding:12px; overflow-y:auto; font-size:14px; color:#333; }
+.chat-input{ display:flex; border-top:1px solid #ddd; }
+.chat-input input{ flex:1; border:none; padding:10px; outline:none; }
+.chat-input button{ padding:10px 14px; background:#C75BA1; color:white; border:none; cursor:pointer; }
+
+/* ===== Mobile UX ===== */
+@media(max-width:768px){
+  .navbar{ padding:15px 20px; }
+  .container{ width:92%; padding:20px; }
+
+  .chatbox{
+    right:5%;
+    width:90%;
+    max-width:none;
+  }
+
+  form input, form textarea{
+    padding:10px;
+  }
+  form button{
+    width:100%;
+    padding:12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <h2>🎁 Acrylicaura Studio</h2>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
+
+<!-- Subnav -->
+<div class="subnav">
+  <a href="products.html">Products</a>
+  <a href="customized.html">Customized</a>
+  <a href="orders.html">Orders</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="summary.html">Summary</a>
+</div>
+
+<!-- Header -->
+<div class="page-header">
+  <h1>Contact Us</h1>
+  <p>We love to hear from you!</p>
+</div>
+
+<!-- Container -->
+<div class="container">
+
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="email" id="email" placeholder="Your Email" required>
+    <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+
+  <div class="summary" id="summaryBox">
+    <h3>📋 Message Summary</h3>
+    <p><strong>Name:</strong> <span id="sName"></span></p>
+    <p><strong>Email:</strong> <span id="sEmail"></span></p>
+    <p><strong>Message:</strong> <span id="sMessage"></span></p>
+  </div>
+
+  <!-- Order Preview -->
+  <div id="orderPreview"></div>
+
+</div>
+
+<!-- Chatbot -->
+<div class="chatbot" id="chatbotBtn">💬</div>
+<div class="chatbox" id="chatbox">
+  <div class="chat-header">Chat with us</div>
+  <div class="chat-body" id="chatBody">
+    <p>Hi 👋 How can we help you today?</p>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  © 2025 Acrylicaura Studio — ✨ Where emotions transform into beautiful handmade gifts.
+</div>
+
+<script>
+// ===== Day 29: Gift Selection =====
+const giftCatalog = {
+  "Photo Frame":{base:500},
+  "Name Plate":{base:700},
+  "Moon Lamp":{base:1200},
+  "Resin Gift":{base:650},
+  "Custom Mug":{base:400},
+  "Couple Gift":{base:800},
+  "Birthday/Anniversary":{base:900}
+};
+const materials = ["Acrylic","Wood","Metal"];
+const sizes = ["Small","Medium","Large"];
+
+let order = JSON.parse(localStorage.getItem("chatOrder")) || {gift:null, material:null, size:null, price:0};
+
+function updateOrderPreview(){
+  const preview = document.getElementById("orderPreview");
+  if(order.gift){
+    preview.innerText = `Selected: ${order.gift} | Material: ${order.material || '-'} | Size: ${order.size || '-'} | Price: ₹${order.price}`;
+    preview.style.display = 'block';
+  } else preview.style.display = 'none';
+}
+
+function handleQuickReply(opt){
+  if(!order.gift){ order.gift=opt; order.price=giftCatalog[opt].base; alert(`Gift selected: ${opt}`); showQuickReplies(materials); }
+  else if(!order.material){ order.material=opt; order.price=Math.round(order.price*1.2); alert(`Material chosen: ${opt}`); showQuickReplies(sizes); }
+  else if(!order.size){ order.size=opt; alert(`Size chosen: ${opt}`); localStorage.setItem("chatOrder", JSON.stringify(order)); updateOrderPreview(); showQuickReplies([]); alert("✅ Order saved."); }
+  updateOrderPreview();
+}
+
+function showQuickReplies(options){
+  if(options.length===0) return;
+  let choice = prompt(`Choose one:\n${options.join("\n")}`);
+  if(choice) handleQuickReply(choice);
+}
+
+// ===== Contact Form =====
+document.getElementById("contactForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  document.getElementById("sName").innerText = name.value;
+  document.getElementById("sEmail").innerText = email.value;
+  document.getElementById("sMessage").innerText = message.value;
+  this.style.display = "none";
+  summaryBox.style.display = "block";
+  // Trigger gift selection quick reply
+  showQuickReplies(Object.keys(giftCatalog));
+});
+
+// ===== Chatbot =====
+const chatbotBtn = document.getElementById('chatbotBtn');
+const chatbox = document.getElementById('chatbox');
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+
+chatbotBtn.onclick = () => {
+  chatbox.style.display = chatbox.style.display === 'flex' ? 'none' : 'flex';
+};
+
+function sendMessage(){
+  const msg = chatInput.value.trim();
+  if(!msg) return;
+  const p = document.createElement('p');
+  p.textContent = "You: " + msg;
+  chatBody.appendChild(p);
+  chatInput.value='';
+  chatBody.scrollTop = chatBody.scrollHeight;
+  setTimeout(()=>{
+    const b=document.createElement('p');
+    b.textContent="Bot: Thanks for reaching out! We'll assist you shortly 💖";
+    chatBody.appendChild(b);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  },800);
+}
+
+// Initialize order preview
+updateOrderPreview();
+</script>
+
+</body>
+</html>
