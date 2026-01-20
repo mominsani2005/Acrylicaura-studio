@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment - Acrylicaura Studio</title>
+<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#FFE6F3,#FFF4FA);
+}
+
+.container{
+  max-width:600px;
+  margin:40px auto;
+  padding:20px;
+}
+
+.card{
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(18px);
+  border-radius:22px;
+  padding:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+}
+
+h2{
+  text-align:center;
+  color:#C75BA1;
+  margin-bottom:25px;
+}
+
+label{
+  font-weight:600;
+  margin-top:14px;
+  display:block;
+}
+
+.input-box{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #e5d0ff;
+  margin-top:6px;
+}
+
+.btn{
+  background:linear-gradient(135deg,#C75BA1,#E77CC4);
+  color:white;
+  font-weight:600;
+  padding:14px 0;
+  border-radius:12px;
+  margin-top:18px;
+  width:100%;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.btn:hover{
+  transform:scale(1.02);
+}
+
+.summary p{
+  margin:6px 0;
+}
+
+.summary img{
+  max-width:100%;
+  height:auto;
+  border-radius:12px;
+  margin-top:6px;
+}
+
+/* ========================= */
+/* DAY 26 – MOBILE UX FIXES */
+/* ========================= */
+@media (max-width: 640px){
+  body{
+    overflow-y:auto;
+  }
+
+  .container{
+    margin:25px auto;
+    padding:16px;
+  }
+
+  .card{
+    padding:20px;
+  }
+
+  h2{
+    font-size:22px;
+    margin-bottom:18px;
+  }
+
+  .btn{
+    padding:16px 0;
+  }
+
+  .btn:hover{
+    transform:none;
+  }
+
+  .summary img{
+    max-height:220px;
+    object-fit:contain;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Payment & Order Confirmation</h2>
+
+  <div class="card summary" id="orderSummary"></div>
+
+  <label>Payment Method</label>
+  <select id="paymentMethod" class="input-box">
+    <option>UPI</option>
+    <option>Card</option>
+    <option>Wallet</option>
+    <option>COD</option>
+  </select>
+
+  <button class="btn" id="payBtn">Confirm & Pay</button>
+</div>
+
+<script>
+// ====== DAY 29 & 30: User session check ======
+const userSession = JSON.parse(localStorage.getItem('userSession'));
+if(!userSession){
+  alert("Please login first!");
+  window.location.href='login.html';
+}
+
+// ====== Load customization ======
+const customization = JSON.parse(localStorage.getItem("customizationData"));
+if(!customization){
+  alert("No customization found! Please create a design first.");
+  window.location.href="customize.html";
+}
+
+const summaryDiv = document.getElementById("orderSummary");
+summaryDiv.innerHTML=`
+  <p><b>Category:</b> ${customization.category?.name || ""}</p>
+  <p><b>Material:</b> ${customization.material}</p>
+  <p><b>Color:</b> <span style="display:inline-block;width:20px;height:20px;background:${customization.color};border-radius:4px;"></span></p>
+  <p><b>Style:</b> ${customization.style}</p>
+  <p><b>Size:</b> ${customization.size}</p>
+  <p><b>Message:</b> ${customization.message || "-"}</p>
+  ${customization.photo? `<p><b>Photo:</b><br><img src="${customization.photo}">` : ""}
+`;
+
+document.getElementById("payBtn").onclick = ()=>{
+  const payment = document.getElementById("paymentMethod").value;
+
+  // Load all orders from localStorage
+  const allOrders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  const orderId = "ORD"+Date.now();
+  const date = new Date().toLocaleDateString();
+
+  // Add user email for user-specific orders
+  const newOrder = {
+    orderId,
+    date,
+    category: customization.category?.name || "",
+    material: customization.material,
+    color: customization.color,
+    style: customization.style,
+    size: customization.size,
+    message: customization.message,
+    photo: customization.photo || "",
+    paymentMethod: payment,
+    status: "Pending",
+    userEmail: userSession.email || "Guest"
+  };
+
+  allOrders.push(newOrder);
+  localStorage.setItem("orders", JSON.stringify(allOrders));
+  localStorage.removeItem("customizationData");
+
+  alert(`Payment successful! Your order ID is ${orderId}`);
+  window.location.href="orders.html";
+};
+</script>
+
+</body>
+</html>

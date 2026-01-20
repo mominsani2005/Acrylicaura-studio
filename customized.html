@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customize Your Gift - Acrylicaura Studio</title>
+<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+body{ font-family:'Poppins',sans-serif; margin:0; background:linear-gradient(135deg,#FFE6F3,#FFF4FA);}
+.navbar{ background:#C75BA1; color:white; padding:15px 30px; display:flex; justify-content:space-between; align-items:center;}
+.card{background:rgba(255,255,255,0.6); backdrop-filter:blur(15px); border-radius:20px; padding:20px; box-shadow:0 8px 25px rgba(0,0,0,0.15); margin-bottom:20px;}
+.preview{border:2px dashed #C75BA1; border-radius:15px; padding:15px; min-height:220px; text-align:center;}
+.input-box{width:100%; padding:10px; border-radius:12px; border:1px solid #e5d0ff; margin-top:10px;}
+.btn{background:linear-gradient(135deg,#C75BA1,#E77CC4); color:white; font-weight:600; padding:12px 20px; border-radius:12px; margin-top:10px; cursor:pointer;}
+#selectedCategory{cursor:pointer;}
+
+/* Chatbot */
+.chatbot{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  width:60px; height:60px;
+  border-radius:50%;
+  background:#C75BA1; color:white;
+  display:flex; justify-content:center; align-items:center;
+  font-size:28px; cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  transition:0.3s; z-index:1000;
+}
+.chatbot:hover{ transform:scale(1.1); }
+
+.chatbox{
+  position:fixed;
+  bottom:95px;
+  right:25px;
+  width:300px;
+  max-height:420px;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(15px);
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.2);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:1000;
+}
+.chat-header{ background:#C75BA1; color:white; padding:12px; text-align:center; font-weight:600; }
+.chat-body{ flex:1; padding:12px; overflow-y:auto; font-size:14px; color:#333; }
+.chat-input{ display:flex; border-top:1px solid #ddd; }
+.chat-input input{ flex:1; border:none; padding:10px; outline:none; }
+.chat-input button{ padding:10px 14px; background:#C75BA1; color:white; border:none; cursor:pointer; }
+</style>
+</head>
+
+<body>
+
+<script>
+const userSession = JSON.parse(localStorage.getItem("userSession"));
+if(!userSession){
+  alert("Please login first!");
+  window.location.href="login.html";
+}
+</script>
+
+<div class="navbar">
+  <h2>🎁 Acrylicaura Studio</h2>
+</div>
+
+<div class="container max-w-4xl mx-auto p-6">
+<h2 class="text-2xl font-bold mb-4 text-purple-700">Customize Your Gift</h2>
+
+<div class="card">
+<p>Selected Category:
+<span id="selectedCategory" class="font-semibold text-purple-600 underline"></span>
+</p>
+</div>
+
+<div class="card">
+<label class="font-semibold">Material</label>
+<select id="material" class="input-box">
+<option>Acrylic</option>
+<option>Wood</option>
+<option>Metal</option>
+</select>
+</div>
+
+<div class="card">
+<label class="font-semibold">Color</label>
+<input type="color" id="color" class="input-box">
+</div>
+
+<div class="card">
+<label class="font-semibold">Design Style</label>
+<select id="style" class="input-box">
+<option>Modern</option>
+<option>Classic</option>
+<option>Minimal</option>
+<option>Luxury</option>
+</select>
+</div>
+
+<div class="card">
+<label class="font-semibold">Upload Photo</label>
+<input type="file" id="photoUpload" class="input-box" accept="image/*">
+</div>
+
+<div class="card">
+<label class="font-semibold">Personal Message</label>
+<textarea id="message" class="input-box"></textarea>
+</div>
+
+<div class="card">
+<label class="font-semibold">Size</label>
+<select id="size" class="input-box">
+<option>Small</option>
+<option>Medium</option>
+<option>Large</option>
+</select>
+</div>
+
+<div class="card">
+<h3 class="font-semibold mb-2">Live Preview</h3>
+<div class="preview" id="livePreview">Preview will appear here</div>
+</div>
+
+<button class="btn" id="saveBtn">Save & Continue</button>
+</div>
+
+<!-- Chatbot -->
+<div class="chatbot" id="chatbotBtn">💬</div>
+<div class="chatbox" id="chatbox">
+  <div class="chat-header">Chat with us</div>
+  <div class="chat-body" id="chatBody">
+    <p>Hi 👋 How can we help you today?</p>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+// ===== Load category =====
+let category = JSON.parse(localStorage.getItem("selectedCategory"));
+const selectedCategorySpan = document.getElementById("selectedCategory");
+selectedCategorySpan.innerText = category?.name || "Select Category";
+selectedCategorySpan.onclick = () => { window.location.href = "selectcategory.html"; };
+
+// ===== Day 29: Gift selection order (quick replies) =====
+const giftCatalog = {
+  "Photo Frame":{base:500},
+  "Name Plate":{base:700},
+  "Moon Lamp":{base:1200},
+  "Resin Gift":{base:650},
+  "Custom Mug":{base:400},
+  "Couple Gift":{base:800},
+  "Birthday/Anniversary":{base:900}
+};
+let order = JSON.parse(localStorage.getItem("chatOrder")) || {gift:null, material:null, size:null, price:0};
+
+function updateOrderPreview(){
+  if(order.gift){
+    const preview = document.getElementById("livePreview");
+    preview.innerHTML = `<p>Selected: ${order.gift} | Material: ${order.material || '-'} | Size: ${order.size || '-'} | Price: ₹${order.price}</p>`;
+  }
+}
+
+function handleQuickReply(opt){
+  if(!order.gift){ order.gift=opt; order.price=giftCatalog[opt].base; alert(`Gift selected: ${opt}`); showQuickReplies(["Acrylic","Wood","Metal"]); }
+  else if(!order.material){ order.material=opt; order.price=Math.round(order.price*1.2); alert(`Material chosen: ${opt}`); showQuickReplies(["Small","Medium","Large"]); }
+  else if(!order.size){ order.size=opt; alert(`Size chosen: ${opt}`); localStorage.setItem("chatOrder", JSON.stringify(order)); updateOrderPreview(); showQuickReplies([]); alert("✅ Order saved."); }
+  updateOrderPreview();
+}
+
+function showQuickReplies(options){
+  if(options.length===0) return;
+  let choice = prompt(`Choose one:\n${options.join("\n")}`);
+  if(choice) handleQuickReply(choice);
+}
+
+// ===== Customization Data =====
+let customizationData = JSON.parse(localStorage.getItem("customizationData")) || {
+  category: category,
+  material: "",
+  style: "",
+  color: "#ffffff",
+  size: "",
+  message: "",
+  photo: ""
+};
+
+// LOAD SAVED VALUES
+material.value = customizationData.material;
+style.value = customizationData.style;
+color.value = customizationData.color || "#ffffff";
+size.value = customizationData.size;
+message.value = customizationData.message;
+
+// IMAGE UPLOAD → BASE64
+photoUpload.onchange = () => {
+  const file = photoUpload.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => { customizationData.photo = reader.result; saveAndPreview(); };
+  reader.readAsDataURL(file);
+};
+
+// SAVE + PREVIEW
+function saveAndPreview(){
+  customizationData.material = material.value;
+  customizationData.style = style.value;
+  customizationData.color = color.value;
+  customizationData.size = size.value;
+  customizationData.message = message.value;
+  customizationData.category = category; 
+
+  localStorage.setItem("customizationData", JSON.stringify(customizationData));
+
+  livePreview.style.background = customizationData.color;
+  livePreview.innerHTML = `
+    ${customizationData.photo ? `<img src="${customizationData.photo}" class="mx-auto mb-2 rounded-lg" style="max-height:150px;">` : ""}
+    <p><b>Category:</b> ${customizationData.category?.name || ""}</p>
+    <p><b>Material:</b> ${customizationData.material}</p>
+    <p><b>Style:</b> ${customizationData.style}</p>
+    <p><b>Size:</b> ${customizationData.size}</p>
+    <p><b>Message:</b> "${customizationData.message}"</p>
+  `;
+}
+material.onchange =
+style.onchange =
+size.onchange =
+color.oninput =
+message.oninput = saveAndPreview;
+
+saveAndPreview();
+
+// CONTINUE TO PAYMENT
+saveBtn.onclick = () => {
+  if(!customizationData.category){
+    alert("Select category first!");
+    return;
+  }
+  localStorage.setItem("customization", JSON.stringify(customizationData));
+  alert("Customization saved!");
+  window.location.href = "payment.html";
+};
+
+// ===== Chatbot =====
+const chatbotBtn = document.getElementById('chatbotBtn');
+const chatbox = document.getElementById('chatbox');
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+
+chatbotBtn.onclick = () => { chatbox.style.display = chatbox.style.display === 'flex' ? 'none' : 'flex'; };
+
+function sendMessage(){
+  const msg = chatInput.value.trim();
+  if(!msg) return;
+  const p = document.createElement('p');
+  p.textContent = "You: " + msg;
+  chatBody.appendChild(p);
+  chatInput.value='';
+  chatBody.scrollTop = chatBody.scrollHeight;
+  setTimeout(()=>{
+    const b=document.createElement('p');
+    b.textContent="Bot: Thanks for reaching out! We'll assist you shortly 💖";
+    chatBody.appendChild(b);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  },800);
+}
+
+// Initialize order preview
+updateOrderPreview();
+</script>
+
+</body>
+</html>

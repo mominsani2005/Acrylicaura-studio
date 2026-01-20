@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>✨ Acrylicaura Studio</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    body { margin:0; overflow:hidden; font-family: "Poppins", sans-serif; background: #fdf5ff; }
+    
+    /* Aurora Glow Background */
+    .aurora { position: fixed; inset:0; background: linear-gradient(120deg, #ffc8f933, #cba7ff33, #ffe3ff33, #fad9ff33); filter: blur(90px); animation: auroraFlow 14s ease-in-out infinite; background-size: 200% 200%; }
+    @keyframes auroraFlow { 0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; } }
+
+    /* Rotating Glow Ring */
+    .light-ring { position: fixed; width:900px; height:900px; border-radius:50%; background: radial-gradient(circle, rgba(255,192,255,0.5), transparent 70%); top:50%; left:50%; transform: translate(-50%, -50%); animation: spin 20s linear infinite; filter: blur(50px); }
+    @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+    /* Floating Particles */
+    .particles div { position:absolute; width:6px; height:6px; background:white; border-radius:50%; opacity:0.7; animation:sparkle 7s infinite ease-out; box-shadow:0 0 10px 4px rgba(255,255,255,0.7); }
+    @keyframes sparkle { 0% { transform: translateY(0); opacity:0.5; } 100% { transform: translateY(-120vh); opacity:0; } }
+
+    /* Magical shapes */
+    .magic-shape { position: absolute; font-size: 20px; opacity:0.7; animation: floatUp 8s linear infinite; }
+    .star { color:#ff7ee6; } .heart { color:#c77bff; }
+    @keyframes floatUp { 0% { transform: translateY(0); opacity:0.7; } 100% { transform: translateY(-150vh); opacity:0; } }
+
+    /* Glass Card */
+    .glass-card { background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); border-radius: 25px; border: 1px solid rgba(255,255,255,0.4); padding: 32px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); animation: fadeUp 1s ease-out; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+
+    /* Input */
+    .input-box { width:100%; padding:12px; border-radius:12px; border:1px solid #e5d0ff; background: rgba(255,255,255,0.6); outline:none; transition:0.2s; margin-bottom:10px;}
+    .input-box:focus { border-color:#d28dff; box-shadow:0 0 10px #ebb7ff; }
+
+    /* Buttons */
+    .btn-gradient { background: linear-gradient(135deg, #ff78d6, #b47bff); padding:12px; color:white; font-weight:600; border-radius:12px; width:100%; transition:0.3s; box-shadow:0 5px 15px rgba(180,110,255,0.4); }
+    .btn-gradient:hover { transform: scale(1.03); box-shadow:0 8px 20px rgba(180,110,255,0.6); }
+    .btn-gradient:disabled { opacity:0.7; cursor:wait; }
+
+    /* Switch & Errors */
+    .switch { text-align:center; margin-top:10px; font-size:0.9rem; color:#555; cursor:pointer; }
+    .error { color:#FF4D4D; font-size:0.85rem; margin-bottom:10px; text-align:center; }
+
+    /* Spinner (inside button) */
+    .spinner { border: 2px solid rgba(255,255,255,0.3); border-top: 2px solid white; border-radius: 50%; width:16px; height:16px; animation: spinBtn 0.6s linear infinite; display:inline-block; margin-right:8px; vertical-align:middle; }
+    @keyframes spinBtn { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Aurora Backgrounds -->
+  <div class="aurora"></div>
+  <div class="light-ring"></div>
+
+  <!-- Particles -->
+  <div class="particles">
+    <div style="left:12%; animation-duration:6s;"></div>
+    <div style="left:28%; animation-duration:5s;"></div>
+    <div style="left:50%; animation-duration:7s;"></div>
+    <div style="left:72%; animation-duration:4s;"></div>
+    <div style="left:88%; animation-duration:8s;"></div>
+  </div>
+
+  <!-- Floating Shapes -->
+  <div class="magic-shape star" style="left:20%; animation-duration:9s;">★</div>
+  <div class="magic-shape heart" style="left:40%; animation-duration:7s;">❤</div>
+  <div class="magic-shape star" style="left:60%; animation-duration:10s;">★</div>
+  <div class="magic-shape heart" style="left:80%; animation-duration:8s;">❤</div>
+
+  <!-- Login Card -->
+  <div class="flex items-center justify-center min-h-screen relative z-10">
+    <div class="glass-card w-full max-w-md" id="authCard">
+      <h1 class="text-3xl font-bold text-purple-600 mb-2">✨ Acrylicaura Studio</h1>
+      <p class="text-gray-700 text-sm mb-6 text-center">Create, customize & gift art with love 💖</p>
+
+      <form class="space-y-4" id="loginForm">
+        <input type="text" id="loginEmail" placeholder="Email or Phone" class="input-box" required>
+        <input type="password" id="loginPassword" placeholder="Password" class="input-box" required>
+        <button class="btn-gradient" id="loginBtn">Login</button>
+
+        <div class="flex justify-between text-sm mt-2">
+          <a href="#" id="signupLink" class="text-purple-600 font-medium">Create Account</a>
+          <a href="#" id="guestBtn" class="text-gray-600">Continue as Guest</a>
+        </div>
+
+        <p class="text-center text-xs text-gray-600 mt-4">Or sign in with</p>
+        <div class="flex justify-center gap-3">
+          <button type="button" class="px-4 py-2 border rounded-lg">Google</button>
+          <button type="button" class="px-4 py-2 border rounded-lg">Facebook</button>
+        </div>
+
+        <div id="authError" class="error"></div>
+      </form>
+    </div>
+  </div>
+
+<script>
+// Initialize users storage
+if(!localStorage.getItem('users')) localStorage.setItem('users', JSON.stringify([]));
+
+// Check session
+const userSession = JSON.parse(localStorage.getItem('userSession'));
+if(userSession){
+  alert(`Welcome back, ${userSession.name}! You are already logged in.`);
+  // window.location.href='index.html';
+}
+
+// Elements
+const loginForm = document.getElementById('loginForm');
+const loginBtn = document.getElementById('loginBtn');
+const signupLink = document.getElementById('signupLink');
+const guestBtn = document.getElementById('guestBtn');
+const authError = document.getElementById('authError');
+
+// Helpers
+function showLoading(btn,text='Loading...'){
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span> ${text}`;
+}
+function resetButton(btn,text){ btn.disabled=false; btn.innerHTML=text; }
+
+// Login flow
+loginBtn.addEventListener('click', async (e)=>{
+  e.preventDefault();
+  authError.textContent='';
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+  if(!email || !password){
+    authError.textContent = "All fields are required!";
+    return;
+  }
+
+  showLoading(loginBtn);
+
+  // Simulate delay
+  await new Promise(resolve=>setTimeout(resolve,1000));
+
+  const users = JSON.parse(localStorage.getItem('users'));
+  const user = users.find(u=>u.email===email && u.password===password);
+
+  if(user){
+    localStorage.setItem('userSession', JSON.stringify({name:user.name,email:user.email}));
+    resetButton(loginBtn,'Login');
+    alert(`Login successful! Welcome back, ${user.name}`);
+    window.location.href='index.html';
+  } else {
+    authError.textContent = "Invalid email or password!";
+    resetButton(loginBtn,'Login');
+  }
+});
+
+// Signup flow
+signupLink.addEventListener('click', async (e)=>{
+  e.preventDefault();
+  const btnText = signupLink.textContent;
+  showLoading(signupLink);
+
+  await new Promise(resolve=>setTimeout(resolve,800));
+
+  const name = prompt("Enter your full name:");
+  const email = prompt("Enter email:");
+  const password = prompt("Enter password:");
+
+  if(!name || !email || !password){
+    alert("All fields are required!");
+    resetButton(signupLink,btnText);
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem('users'));
+  if(users.find(u=>u.email===email)){
+    alert("Email already exists!");
+    resetButton(signupLink,btnText);
+    return;
+  }
+
+  users.push({name,email,password});
+  localStorage.setItem('users', JSON.stringify(users));
+  localStorage.setItem('userSession', JSON.stringify({name,email}));
+  resetButton(signupLink,btnText);
+  alert(`Signup successful! Welcome, ${name}`);
+  window.location.href='index.html';
+});
+
+// Continue as Guest
+guestBtn.addEventListener('click', async (e)=>{
+  e.preventDefault();
+  showLoading(guestBtn,'Continuing...');
+  await new Promise(resolve=>setTimeout(resolve,500));
+  localStorage.setItem('userSession', JSON.stringify({name:'Guest',email:''}));
+  resetButton(guestBtn,'Continue as Guest');
+  alert("Continuing as Guest...");
+  window.location.href='index.html';
+});
+</script>
+
+</body>
+</html>

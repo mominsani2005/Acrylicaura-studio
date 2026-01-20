@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Products – Acrylicaura Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,#FFE6F3,#FFF4FA);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header{
+  background:linear-gradient(135deg,#C75BA1,#E77CC4);
+  color:white;
+  text-align:center;
+  padding:45px 20px;
+  border-bottom-left-radius:45px;
+  border-bottom-right-radius:45px;
+}
+
+.container{
+  width:90%;
+  max-width:1000px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+}
+
+.card{
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(14px);
+  border-radius:18px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  transition:transform .3s ease;
+}
+
+/* Disable hover lift on touch devices */
+@media (hover:hover){
+  .card:hover{transform:translateY(-6px)}
+}
+
+.card img{
+  width:100%;
+  border-radius:14px;
+  margin-bottom:10px;
+  display:block;
+}
+
+.card h3{
+  color:#C75BA1;
+  margin:10px 0;
+}
+
+.card button{
+  background:linear-gradient(135deg,#C75BA1,#E77CC4);
+  color:white;
+  border:none;
+  padding:14px 20px;
+  min-height:44px; /* mobile tap target */
+  border-radius:12px;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.card button:active{
+  transform:scale(0.97);
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>✨ Our Products</h1>
+  <p>Choose a gift & customize it your way</p>
+</div>
+
+<div class="container" id="productsContainer">
+  <!-- Products will load here via JS -->
+</div>
+
+<script>
+// ====== DAY 29 & 30: User session check ======
+const userSession = JSON.parse(localStorage.getItem('userSession'));
+if(!userSession){
+  alert("Please login first!");
+  window.location.href='login.html';
+}
+
+// ====== Product Data ======
+const products = [
+  {name:"Photo Frame", img:"https://images.unsplash.com/photo-1585386959984-a41552231692"},
+  {name:"Moon Lamp", img:"https://images.unsplash.com/photo-1616628182506-1fa7a0b5e7b7"},
+  {name:"Resin Art", img:"https://images.unsplash.com/photo-1607082349566-187342175e2f"},
+  {name:"Custom Mug", img:"https://images.unsplash.com/photo-1524594154908-eddacb43b1f9"}
+];
+
+// ====== Render Products ======
+const container = document.getElementById('productsContainer');
+container.innerHTML = products.map(p=>`
+  <div class="card">
+    <img src="${p.img}" loading="lazy" alt="${p.name}">
+    <h3>${p.name}</h3>
+    <button onclick="customizeProduct('${p.name}','${p.img}')">Customize</button>
+  </div>
+`).join("");
+
+// ====== Save selected product & go to customization ======
+function customizeProduct(name,img){
+  localStorage.setItem("selectedProduct", JSON.stringify({name,img}));
+  window.location.href='customized.html';
+}
+</script>
+
+</body>
+</html>

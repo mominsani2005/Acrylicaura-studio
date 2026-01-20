@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cart - Acrylicaura Studio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #FFE6F3, #FFF4FA);
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  background: #C75BA1;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  flex-wrap: wrap;
+}
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+}
+.navbar a:hover { color:#FFD1EC; }
+
+/* Container */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Cart Item Card */
+.cart-card {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+.cart-card img {
+  width: 80px;
+  border-radius: 12px;
+  margin-right: 15px;
+}
+.cart-card-info {
+  flex: 1;
+}
+.cart-card h3 {
+  margin: 0;
+  color: #C75BA1;
+  font-size: 18px;
+}
+.cart-card p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+.remove-btn {
+  padding: 8px 12px;
+  background: #E77CC4;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.remove-btn:hover { background: #C75BA1; }
+
+/* Checkout Button */
+.checkout-btn {
+  display: block;
+  width: 100%;
+  padding: 15px 0;
+  margin-top: 20px;
+  background: linear-gradient(135deg,#C75BA1,#E77CC4);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(199,91,161,0.3);
+}
+.checkout-btn:hover { transform: translateY(-3px); }
+
+/* Floating Chatbot */
+.chatbot {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: #C75BA1;
+  color: white;
+  display: flex; justify-content: center; align-items: center;
+  font-size: 28px; cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transition: 0.3s; z-index: 1000;
+}
+.chatbot:hover { transform: scale(1.1); }
+
+.chatbox {
+  position: fixed; bottom: 95px; right: 25px;
+  width: 90%; max-width: 320px; max-height: 420px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  display: none; flex-direction: column; overflow: hidden; z-index: 1000;
+}
+.chat-header { background: #C75BA1; color: white; padding: 12px; text-align: center; font-weight: 600; }
+.chat-body { flex: 1; padding: 12px; overflow-y: auto; font-size: 14px; color: #333; }
+.chat-input { display: flex; border-top: 1px solid #ddd; }
+.chat-input input { flex: 1; border: none; padding: 10px; outline: none; font-size:14px; }
+.chat-input button { padding: 10px 14px; background: #C75BA1; color: white; border: none; cursor: pointer; font-size:14px; }
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: #f0f0f0;
+  margin-top: 40px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width:768px) {
+  .navbar { flex-direction: column; align-items: flex-start; gap:10px; padding:15px 20px; }
+  .navbar h2 { font-size:1.2rem; }
+  .navbar div { display:flex; flex-wrap:wrap; gap:10px; }
+  .cart-card { flex-direction: column; align-items: flex-start; }
+  .cart-card img { margin-bottom: 10px; width: 100%; max-width: 150px; }
+  .cart-card-info { width: 100%; margin-bottom: 10px; }
+  .checkout-btn { font-size: 15px; }
+  .chatbox { bottom: 85px; right: 5%; width: 90%; max-width: none; max-height: 380px; }
+  .chat-input input, .chat-input button { font-size:13px; padding:8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <h2 style="cursor:pointer;" onclick="location.href='index.html'">🎁 Acrylicaura Studio</h2>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
+
+<!-- Container -->
+<div class="container">
+  <h1 style="color:#C75BA1; text-align:center; margin-bottom:25px;">🛒 My Cart</h1>
+  <div id="cartContainer"></div>
+  <button class="checkout-btn" onclick="checkout(); window.location.href='payment.html';">
+    Proceed to Checkout
+  </button>
+</div>
+
+<!-- Floating Chatbot -->
+<div class="chatbot" id="chatbotBtn">💬</div>
+<div class="chatbox" id="chatbox">
+  <div class="chat-header">Chat with us</div>
+  <div class="chat-body" id="chatBody">
+    <p>Hi 👋 How can we help you today?</p>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  © 2025 Acrylicaura Studio — ✨ Where emotions transform into beautiful handmade gifts.
+</div>
+
+<script>
+// Cart Data
+let cartItems = JSON.parse(localStorage.getItem('cartData')) || [
+  { name: "Custom Frame", qty: 1, price: 499, img: "https://cdn-icons-png.flaticon.com/512/3209/3209265.png" },
+  { name: "Resin Art", qty: 2, price: 799, img: "https://cdn-icons-png.flaticon.com/512/2921/2921822.png" }
+];
+
+const cartContainer = document.getElementById('cartContainer');
+
+function renderCart() {
+  cartContainer.innerHTML = '';
+  if(cartItems.length === 0) {
+    cartContainer.innerHTML = '<p style="text-align:center; color:#555;">Your cart is empty.</p>';
+    return;
+  }
+  cartItems.forEach((item, index) => {
+    const card = document.createElement('div');
+    card.className = 'cart-card';
+    card.innerHTML = `
+      <img src="${item.img}" alt="${item.name}">
+      <div class="cart-card-info">
+        <h3>${item.name}</h3>
+        <p>Quantity: ${item.qty}</p>
+        <p>Price: ₹${item.price}</p>
+      </div>
+      <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+    `;
+    cartContainer.appendChild(card);
+  });
+}
+
+function removeItem(index){
+  cartItems.splice(index,1);
+  localStorage.setItem('cartData', JSON.stringify(cartItems));
+  renderCart();
+}
+
+function checkout(){
+  if(cartItems.length === 0){
+    alert("Cart is empty!");
+  } else {
+    alert("Proceeding to checkout...");
+  }
+}
+
+// Initial render
+renderCart();
+
+// Chatbot functionality
+const chatbotBtn = document.getElementById('chatbotBtn');
+const chatbox = document.getElementById('chatbox');
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+
+chatbotBtn.onclick = () => {
+  chatbox.style.display = chatbox.style.display === 'flex' ? 'none' : 'flex';
+};
+
+function sendMessage() {
+  const msg = chatInput.value.trim();
+  if(!msg) return;
+  const userMsg = document.createElement('p');
+  userMsg.textContent = "You: " + msg;
+  chatBody.appendChild(userMsg);
+  chatInput.value = '';
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  setTimeout(() => {
+    const botMsg = document.createElement('p');
+    botMsg.textContent = "Bot: Thanks for reaching out! We'll assist you shortly 💖";
+    chatBody.appendChild(botMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }, 800);
+}
+</script>
+
+<!-- ================= Day 29 + Day 30 (NO UI CHANGE) ================= -->
+<script>
+/* Day 29 – Session Protection */
+if (!localStorage.getItem("userSession")) {
+  window.location.href = "login.html";
+}
+
+/* Day 30 – Cart Page Visitor Counter */
+let cartVisits = localStorage.getItem("acrylicauraCartVisits") || 0;
+localStorage.setItem("acrylicauraCartVisits", ++cartVisits);
+</script>
+
+</body>
+</html>

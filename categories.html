@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gift Categories - Acrylicaura Studio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ================= BASE ================= */
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#FFE6F3,#FFF4FA);
+  color:#333;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ================= NAVBAR ================= */
+.navbar{
+  background:#C75BA1;
+  color:white;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 3px 10px rgba(0,0,0,0.15);
+}
+.navbar-left h2{margin:0;cursor:pointer;}
+.navbar-right{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.navbar a{
+  color:white;
+  text-decoration:none;
+  font-weight:500;
+}
+.navbar a:hover{color:#FFD1EC;}
+.navbar .icon{
+  cursor:pointer;
+  font-size:20px;
+  padding:6px;
+}
+
+/* Logout */
+#logoutBtn{
+  background:#FF7E6E;
+  color:white;
+  padding:6px 12px;
+  border:none;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+}
+#logoutBtn:hover{background:#FF4D4D;}
+
+/* ================= SUBNAV ================= */
+.subnav{
+  background:linear-gradient(135deg,#E77CC4,#F2A6D8);
+  padding:10px 30px;
+  display:flex;
+  gap:28px;
+  justify-content:center;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.subnav::-webkit-scrollbar{display:none;}
+.subnav a{
+  color:white;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:500;
+  white-space:nowrap;
+}
+
+/* ================= HEADER ================= */
+.page-header{
+  text-align:center;
+  color:#C75BA1;
+  margin:30px 15px 20px;
+  font-size:28px;
+  font-weight:700;
+}
+
+/* ================= FILTERS ================= */
+.filters{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+  padding:0 15px;
+}
+.filters select{
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid #C75BA1;
+  outline:none;
+  font-size:14px;
+  min-width:150px;
+}
+
+/* ================= CATEGORIES ================= */
+.categories{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+  width:85%;
+  max-width:1000px;
+  margin:0 auto 40px;
+}
+.card{
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(14px);
+  border-radius:18px;
+  padding:18px 12px;
+  text-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,0.1);
+  transition:0.25s;
+  cursor:pointer;
+}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.18);
+}
+.card img{width:80px;margin-bottom:10px;}
+.card h3{color:#C75BA1;margin:8px 0;font-size:18px;}
+.card p{font-size:13px;color:#555;}
+
+/* ================= NEXT BUTTON ================= */
+.next-btn{
+  display:block;
+  width:180px;
+  margin:0 auto 40px;
+  padding:14px 0;
+  background:linear-gradient(135deg,#C75BA1,#E77CC4);
+  color:white;
+  font-weight:600;
+  font-size:16px;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  box-shadow:0 5px 15px rgba(199,91,161,0.3);
+}
+.next-btn:hover{transform:translateY(-3px);}
+
+/* ================= CHATBOT ================= */
+.chatbot{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#C75BA1;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:28px;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  transition:0.3s;
+  z-index:1000;
+}
+.chatbot:hover{transform:scale(1.1);}
+
+.chatbox{
+  position:fixed;
+  bottom:95px;
+  right:25px;
+  width:300px;
+  max-height:420px;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(15px);
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.2);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:1000;
+}
+.chat-header{
+  background:#C75BA1;
+  color:white;
+  padding:12px;
+  text-align:center;
+  font-weight:600;
+}
+.chat-body{
+  flex:1;
+  padding:12px;
+  overflow-y:auto;
+  font-size:14px;
+}
+.chat-input{
+  display:flex;
+  border-top:1px solid #ddd;
+}
+.chat-input input{
+  flex:1;
+  border:none;
+  padding:12px;
+  outline:none;
+}
+.chat-input button{
+  padding:12px 16px;
+  background:#C75BA1;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+
+/* ================= DAY-26 MOBILE UX ================= */
+@media(max-width:768px){
+  .navbar{padding:12px 18px;}
+  .navbar-right{gap:12px;}
+  .page-header{font-size:22px;}
+  .categories{width:92%;}
+  .next-btn{
+    position:sticky;
+    bottom:15px;
+    z-index:500;
+  }
+  .chatbox{
+    width:92%;
+    right:4%;
+    bottom:90px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="navbar-left">
+    <h2 onclick="location.href='index.html'">🎁 Acrylicaura Studio</h2>
+  </div>
+  <div class="navbar-right">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html">Contact</a>
+    <button id="logoutBtn">Logout</button>
+    <div class="icon" onclick="location.href='login.html'">👤</div>
+    <div class="icon" onclick="location.href='cart.html'">🛒</div>
+  </div>
+</div>
+
+<!-- SUBNAV -->
+<div class="subnav">
+  <a href="productpage.html">Products</a>
+  <a href="customized.html">Customized</a>
+  <a href="orders.html">Orders</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="summary.html">Summary</a>
+</div>
+
+<h1 class="page-header" id="welcomeMsg">Select Your Gift Category</h1>
+
+<!-- FILTERS -->
+<div class="filters">
+  <select id="priceFilter">
+    <option value="">Filter by Price</option>
+    <option value="low">Low to High</option>
+    <option value="high">High to Low</option>
+  </select>
+  <select id="materialFilter">
+    <option value="">Filter by Material</option>
+    <option value="acrylic">Acrylic</option>
+    <option value="resin">Resin</option>
+  </select>
+  <select id="occasionFilter">
+    <option value="">Filter by Occasion</option>
+    <option value="birthday">Birthday</option>
+    <option value="anniversary">Anniversary</option>
+    <option value="wedding">Wedding</option>
+  </select>
+</div>
+
+<div class="categories" id="categoryContainer"></div>
+
+<button class="next-btn" onclick="goToCustomize()">Next: Customize</button>
+
+<div class="chatbot" id="chatbotBtn">💬</div>
+<div class="chatbox" id="chatbox">
+  <div class="chat-header">Chat with us</div>
+  <div class="chat-body" id="chatBody">
+    <p>Hi 👋 How can we help you today?</p>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+/* ================= DAY 30 – VISITOR COUNTER ================= */
+let visits = localStorage.getItem("acrylicauraVisits") || 0;
+localStorage.setItem("acrylicauraVisits", ++visits);
+
+/* ================= DAY 29 – SILENT SESSION CHECK ================= */
+const userSession = JSON.parse(localStorage.getItem('userSession'));
+if(!userSession){
+  location.href='login.html';
+}else{
+  welcomeMsg.textContent=`Hello, ${userSession.name}! Select Your Gift Category`;
+}
+
+// LOGOUT
+logoutBtn.onclick=()=>{
+  localStorage.removeItem('userSession');
+  location.href='login.html';
+};
+
+// DATA
+const categories=[
+{id:1,name:"Acrylic Photo Frames",desc:"Elegant frames for memories",img:"https://cdn-icons-png.flaticon.com/512/3209/3209265.png"},
+{id:2,name:"Resin Art",desc:"Creative resin decor",img:"https://cdn-icons-png.flaticon.com/512/2921/2921822.png"},
+{id:3,name:"Personalized Mugs",desc:"Custom printed mugs",img:"https://cdn-icons-png.flaticon.com/512/3062/3062634.png"},
+{id:4,name:"Custom Lamps",desc:"Unique acrylic lamps",img:"https://cdn-icons-png.flaticon.com/512/4206/4206277.png"},
+{id:5,name:"Gift Boxes",desc:"Luxury gift boxes",img:"https://cdn-icons-png.flaticon.com/512/2920/2920036.png"},
+{id:6,name:"Keychains",desc:"Personalized keychains",img:"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"},
+{id:7,name:"Acrylic Trophies",desc:"Elegant trophies",img:"https://cdn-icons-png.flaticon.com/512/4304/4304983.png"},
+{id:8,name:"Photo Collages",desc:"Memorable collage frames",img:"https://cdn-icons-png.flaticon.com/512/135/135691.png"}
+];
+
+let selectedCategory=null;
+const container=document.getElementById('categoryContainer');
+
+function renderCategories(){
+  container.innerHTML='';
+  categories.forEach(cat=>{
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`<img src="${cat.img}"><h3>${cat.name}</h3><p>${cat.desc}</p>`;
+    card.onclick=e=>selectCategory(cat.id,e);
+    container.appendChild(card);
+  });
+}
+function selectCategory(id,e){
+  selectedCategory=categories.find(c=>c.id===id);
+  document.querySelectorAll('.card').forEach(c=>c.style.border='none');
+  e.currentTarget.style.border='3px solid #C75BA1';
+  localStorage.setItem('selectedCategory',JSON.stringify(selectedCategory));
+}
+function goToCustomize(){
+  if(!selectedCategory)return alert("Please select a category first.");
+  location.href='customized.html';
+}
+renderCategories();
+
+// CHATBOT
+chatbotBtn.onclick=()=>chatbox.style.display=chatbox.style.display==='flex'?'none':'flex';
+function sendMessage(){
+  const msg=chatInput.value.trim();
+  if(!msg)return;
+  chatBody.innerHTML+=`<p>You: ${msg}</p>`;
+  chatInput.value='';
+  chatBody.scrollTop=chatBody.scrollHeight;
+  setTimeout(()=>{
+    chatBody.innerHTML+=`<p>Bot: Thanks for reaching out! We'll assist you shortly 💖</p>`;
+    chatBody.scrollTop=chatBody.scrollHeight;
+  },700);
+}
+</script>
+
+</body>
+</html>

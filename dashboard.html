@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Acrylicaura Studio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin:0;
+            font-family:'Poppins', Arial, sans-serif;
+            background: linear-gradient(135deg, #fae8ff, #ffe8f2);
+        }
+        .navbar { background:#ce9ddf; color:white; padding:15px 30px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; box-shadow:0 4px 12px rgba(0,0,0,0.15); }
+        .navbar h2 { margin:0; }
+        .navbar a { color:white; margin-left:20px; text-decoration:none; font-weight:bold; transition:0.3s; }
+        .navbar a:hover { color:#fff7a6; }
+        .subnav{ background:linear-gradient(135deg,#d39fe2,#f2c3ef); padding:10px 30px; display:flex; justify-content:center; gap:25px; flex-wrap:wrap; }
+        .subnav a{ color:white; font-size:13px; text-decoration:none; }
+        .container { width:90%; max-width:900px; margin:30px auto; }
+        .container h2 { text-align:center; color:#a65ac5; margin-bottom:25px; font-size:32px; text-shadow:1px 1px 3px rgba(0,0,0,0.08); }
+        .card { background:white; padding:22px 25px; border-radius:18px; margin-bottom:20px; box-shadow:0 8px 20px rgba(0,0,0,0.12); transition: transform 0.3s, box-shadow 0.3s; position:relative; overflow:hidden; }
+        .card:hover { transform: translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.18); }
+        .card h3 { color:#a65ac5; margin-bottom:12px; font-size:22px; display:flex; align-items:center; }
+        .card h3::before { content:"🎁"; margin-right:10px; font-size:24px; }
+        .card.materials h3::before { content:"🎨"; }
+        .card.trending h3::before { content:"✨"; }
+        .card.orders h3::before { content:"📦"; }
+        .card.tips h3::before { content:"💡"; }
+        textarea { width:100%; padding:15px; border-radius:12px; border:1px solid #d8c0e2; margin-top:20px; font-size:16px; resize:none; background:#fcf8ff; box-shadow:0 4px 10px rgba(0,0,0,0.08); transition: box-shadow 0.3s, border-color 0.3s; }
+        textarea:focus { border-color:#b76bd8; box-shadow:0 6px 14px rgba(183,107,216,0.30); outline:none; background:white; }
+        button { width:100%; padding:16px; border:none; border-radius:12px; background:linear-gradient(135deg, #b76bd8, #d49ded); color:white; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px; transition:0.3s; box-shadow:0 6px 18px rgba(183,107,216,0.30); }
+        button:hover { background:linear-gradient(135deg, #a351c0, #c884e3); transform:translateY(-3px); box-shadow:0 8px 22px rgba(183,107,216,0.35); }
+        .footer { text-align:center; padding:20px; background:#f0f0f0; margin-top:40px; border-top-left-radius:25px; border-top-right-radius:25px; font-size:14px; color:#555; }
+        .chatbot { position:fixed; bottom:25px; right:25px; width:60px; height:60px; border-radius:50%; background:#C75BA1; color:white; display:flex; justify-content:center; align-items:center; font-size:28px; cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,0.3); transition:0.3s; z-index:1000; }
+        .chatbot:hover { transform:scale(1.1); }
+        .chatbox { position:fixed; bottom:95px; right:25px; width:300px; max-height:420px; background:rgba(255,255,255,0.92); backdrop-filter:blur(15px); border-radius:20px; box-shadow:0 8px 25px rgba(0,0,0,0.2); display:none; flex-direction:column; overflow:hidden; z-index:1000; }
+        .chat-header { background:#C75BA1; color:white; padding:12px; text-align:center; font-weight:600; }
+        .chat-body { flex:1; padding:12px; overflow-y:auto; font-size:14px; color:#333; }
+        .chat-input { display:flex; border-top:1px solid #ddd; }
+        .chat-input input { flex:1; border:none; padding:10px; outline:none; }
+        .chat-input button { padding:10px 14px; background:#C75BA1; color:white; border:none; cursor:pointer; }
+        @media (max-width:640px){ .navbar{ flex-direction:column; text-align:center; } .navbar div{ margin-top:10px; } .navbar a{ margin:8px; display:inline-block; } .subnav{ gap:15px; padding:12px; } .chatbox{ left:10px; right:10px; width:auto; } }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>✨ Acrylicaura Studio</h2>
+    <div>
+        <a href="home.html">Home</a>
+        <a href="orders.html">My Orders</a>
+        <a href="about.html">About</a>
+    </div>
+</div>
+
+<div class="subnav">
+  <a href="products.html">Products</a>
+  <a href="customized.html">Customized</a>
+  <a href="orders.html">Orders</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="summary.html">Summary</a>
+</div>
+
+<div class="container">
+    <h2>Your Creative Dashboard</h2>
+
+    <div class="card trending">
+        <h3>Trending Gift Ideas</h3>
+        • LED Moon Lamp – Best seller 🌙 <br>
+        • Resin Couple Frame – Anniversary favorite 💕 <br>
+        • Acrylic Night Lamp – Custom names ✨
+    </div>
+
+    <div class="card materials">
+        <h3>Popular Material Choices</h3>
+        • Acrylic (high gloss) <br>
+        • Resin (premium) <br>
+        • Wood (classic matte)
+    </div>
+
+    <div class="card tips">
+        <h3>Creative Tip of the Day</h3>
+        Add soft pastel colors to give your gift a dreamy, premium feel. 🎨
+    </div>
+
+    <div class="card orders">
+        <h3>Your Recent Orders</h3>
+        <div id="recentOrders"></div>
+    </div>
+
+    <textarea placeholder="Write your custom gift ideas or notes..."></textarea>
+
+    <button onclick="location.href='customized.html'">Start Customizing</button>
+</div>
+
+<div class="chatbot" id="chatbotBtn">💬</div>
+<div class="chatbox" id="chatbox">
+  <div class="chat-header">Chat with us</div>
+  <div class="chat-body" id="chatBody">
+    <p>Hi 👋 How can we help you today?</p>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<div class="footer">
+  © 2025 Acrylicaura Studio — ✨ Where emotions transform into beautiful handmade gifts.
+</div>
+
+<script>
+// ===== Load recent customization/orders (Day 29) =====
+const recentOrdersDiv = document.getElementById("recentOrders");
+const lastCustomization = JSON.parse(localStorage.getItem("customization")) || null;
+if(lastCustomization){
+    recentOrdersDiv.innerHTML = `
+      • ${lastCustomization.category?.name || 'Custom Gift'} | ${lastCustomization.material} | ${lastCustomization.size} | ₹${lastCustomization.price || '-'} <br>
+      • Message: "${lastCustomization.message || ''}"
+    `;
+}else{
+    recentOrdersDiv.innerHTML = "No recent orders found.";
+}
+
+// ===== Chatbot (Day 30) =====
+const chatbotBtn = document.getElementById('chatbotBtn');
+const chatbox = document.getElementById('chatbox');
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+
+chatbotBtn.onclick = () => { chatbox.style.display = chatbox.style.display === 'flex' ? 'none' : 'flex'; };
+
+function sendMessage() {
+  const msg = chatInput.value.trim();
+  if(!msg) return;
+  const userMsg = document.createElement('p');
+  userMsg.textContent = "You: " + msg;
+  chatBody.appendChild(userMsg);
+  chatInput.value='';
+  chatBody.scrollTop = chatBody.scrollHeight;
+  setTimeout(() => {
+    const botMsg = document.createElement('p');
+    botMsg.textContent = "Bot: Thanks for reaching out! We'll assist you shortly 💖";
+    chatBody.appendChild(botMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }, 800);
+}
+</script>
+
+</body>
+</html>
